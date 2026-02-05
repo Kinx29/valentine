@@ -18,6 +18,18 @@
       margin: 10px;
     }
 
+    /* Second image hidden + fade effect */
+    #pic2 {
+      display: none;
+      opacity: 0;
+      transition: opacity 1.5s ease-in;
+    }
+
+    #pic2.show {
+      display: block;
+      opacity: 1;
+    }
+
     button {
       font-size: 18px;
       padding: 12px 22px;
@@ -37,7 +49,7 @@
       background: #aaa;
     }
 
-    /* Falling emojis */
+    /* Emoji rain */
     .emoji {
       position: fixed;
       top: -40px;
@@ -61,8 +73,11 @@
   <h2>I made a whole website.</h2>
   <h2>So yeah… will you be my Valentine? 💚</h2>
 
-  <img src="pic1.jpg">
-  <img src="pic2.jpg">
+  <!-- First image -->
+  <img id="pic1" src="pic1.jpg">
+
+  <!-- Second image (appears after YES) -->
+  <img id="pic2" src="pic2.jpg">
 
   <br><br>
 
@@ -73,10 +88,16 @@
 
   <script>
     function yesClicked() {
+      // play music (iPhone safe)
       const audio = document.getElementById("song");
       audio.currentTime = 0;
       audio.play().catch(() => {});
 
+      // fade in second picture
+      const pic2 = document.getElementById("pic2");
+      pic2.classList.add("show");
+
+      // start emoji rain
       startEmojiRain();
 
       alert("Correct answer 😌💚");
@@ -89,4 +110,20 @@
     }
 
     function startEmojiRain() {
-      const emojis
+      const emojis = ["💚", "🍀", "🐸", "🌿", "✨"];
+      setInterval(() => {
+        const emoji = document.createElement("div");
+        emoji.className = "emoji";
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(emoji);
+
+        setTimeout(() => emoji.remove(), 5000);
+      }, 200);
+    }
+  </script>
+
+</body>
+</html>
+
