@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Important Question</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe6eb;
+      text-align: center;
+      padding: 40px;
+    }
+    img {
+      width: 200px;
+      border-radius: 15px;
+      margin: 10px;
+    }
+    button {
+      font-size: 18px;
+      padding: 12px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hi. Yes, this is a website.</h1>
+  <h2>Since I’m clearly extra…</h2>
+  <h2>Will you be my Valentine? 🙃❤️</h2>
+
+  <img src="pic1.jpg">
+  <img src="pic2.jpg">
+
+  <br><br>
+
+  <button class="yes" onclick="yesClicked()">Obviously Yes</button>
+  <button onclick="yesClicked()">You Gave Me No Choice</button>
+
+  <audio id="song" src="song.mp3"></audio>
+
+  <script>
+    function yesClicked() {
+      document.getElementById("song").play();
+      alert("Correct answer 😌💘");
+    }
+  </script>
+
+</body>
+</html>
