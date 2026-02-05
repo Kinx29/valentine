@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Serious Question</title>
+  <title>Very Important Question</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #ffe6eb;
+      background: #eaffea;
       text-align: center;
       padding: 40px;
+      overflow: hidden;
     }
 
     img {
@@ -18,7 +20,7 @@
 
     button {
       font-size: 18px;
-      padding: 12px 20px;
+      padding: 12px 22px;
       margin: 15px;
       border: none;
       border-radius: 12px;
@@ -27,35 +29,57 @@
     }
 
     .yes {
-      background: #ff4d6d;
+      background: #2ecc71;
       color: white;
     }
 
     .no {
       background: #aaa;
     }
+
+    /* Falling emojis */
+    .emoji {
+      position: fixed;
+      top: -40px;
+      font-size: 28px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <h1>Okay listen 🙄</h1>
   <h2>I made a whole website.</h2>
-  <h2>So… will you be my Valentine? 💘</h2>
+  <h2>So yeah… will you be my Valentine? 💚</h2>
 
   <img src="pic1.jpg">
   <img src="pic2.jpg">
 
   <br><br>
 
-  <button class="yes" onclick="yesClicked()">Fine, Yes ❤️</button>
+  <button class="yes" onclick="yesClicked()">Fine, Yes 💚</button>
   <button class="no" onmouseover="runAway(this)">No</button>
 
-  <audio id="song" src="song.weba"></audio>
+  <audio id="song" src="song.mp3" preload="auto"></audio>
 
   <script>
     function yesClicked() {
-      document.getElementById("song").play();
-      alert("Correct choice 😌💖");
+      const audio = document.getElementById("song");
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+
+      startEmojiRain();
+
+      alert("Correct answer 😌💚");
     }
 
     function runAway(btn) {
@@ -63,7 +87,6 @@
       const y = Math.random() * 300 - 150;
       btn.style.transform = `translate(${x}px, ${y}px)`;
     }
-  </script>
 
-</body>
-</html>
+    function startEmojiRain() {
+      const emojis
