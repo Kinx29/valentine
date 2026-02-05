@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>One Serious Question</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One Question 💚</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #eaffea;
+      font-family: Arial, sans-serif;
       text-align: center;
       overflow: hidden;
     }
 
     .container {
       padding: 40px;
+      opacity: 1;
+      transition: opacity 1s ease;
+    }
+
+    .container.fade-out {
+      opacity: 0;
     }
 
     img {
       width: 220px;
       border-radius: 15px;
-      margin: 10px;
+      margin: 20px;
     }
 
     button {
@@ -41,13 +48,20 @@
       position: relative;
     }
 
-    /* Fullscreen image */
+    /* Fullscreen second image */
     #fullscreen {
-      display: none;
       position: fixed;
       inset: 0;
       background: url("pic2.jpg") center / cover no-repeat;
+      opacity: 0;
+      transition: opacity 1.5s ease;
       z-index: 9999;
+      pointer-events: none;
+    }
+
+    #fullscreen.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Emoji rain */
@@ -71,59 +85,62 @@
 
 <body>
 
-  <div class="container" id="content">
-    <h1>Okay listen 🙄</h1>
-    <h2>I made a whole website.</h2>
-    <h2>Will you be my Valentine? 💚</h2>
+<div class="container" id="content">
+  <h2>Okay listen 🙄</h2>
+  <h1>Will you be my Valentine? 💚</h1>
 
-    <img src="pic1.jpg">
+  <!-- FIRST IMAGE -->
+  <img src="pic1.jpg">
 
-    <br>
+  <br>
 
-    <button class="yes" onclick="yesClicked()">Fine, Yes 💚</button>
-    <button class="no" onmouseover="runAway(this)">No</button>
-  </div>
+  <button class="yes" id="yesBtn">Yes 💚</button>
+  <button class="no" onmouseover="runAway(this)">No</button>
+</div>
 
-  <!-- Fullscreen image -->
-  <div id="fullscreen"></div>
+<!-- SECOND IMAGE FULLSCREEN -->
+<div id="fullscreen"></div>
 
-  <!-- Audio -->
-  <audio id="song" src="song.mp3"></audio>
+<audio id="song" playsinline>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
-  <script>
-    function yesClicked() {
-      // play audio (works on PC & iPhone)
-      const audio = document.getElementById("song");
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const content = document.getElementById("content");
+  const fullscreen = document.getElementById("fullscreen");
+  const audio = document.getElementById("song");
 
-      // show fullscreen image
-      document.getElementById("content").style.display = "none";
-      document.getElementById("fullscreen").style.display = "block";
+  yesBtn.addEventListener("click", () => {
+    audio.play().then(() => {
+      content.classList.add("fade-out");
 
-      // start emoji rain
-      startEmojiRain();
-    }
+      setTimeout(() => {
+        content.style.display = "none";
+        fullscreen.classList.add("show");
+        startEmojiRain();
+      }, 1000);
+    });
+  });
 
-    function runAway(btn) {
-      const x = Math.random() * 300 - 150;
-      const y = Math.random() * 300 - 150;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
+  function runAway(btn) {
+    btn.style.transform =
+      `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px)`;
+  }
 
-    function startEmojiRain() {
-      const emojis = ["💚", "🍀", "🐸", "🌿", "✨"];
-      setInterval(() => {
-        const e = document.createElement("div");
-        e.className = "emoji";
-        e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        e.style.left = Math.random() * 100 + "vw";
-        e.style.animationDuration = (2 + Math.random() * 3) + "s";
-        document.body.appendChild(e);
-        setTimeout(() => e.remove(), 5000);
-      }, 200);
-    }
-  </script>
+  function startEmojiRain() {
+    const emojis = ["💚", "🍀", "🐸", "🌿", "✨"];
+    setInterval(() => {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+      e.style.left = Math.random() * 100 + "vw";
+      e.style.animationDuration = (2 + Math.random() * 3) + "s";
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 5000);
+    }, 200);
+  }
+</script>
 
 </body>
 </html>
