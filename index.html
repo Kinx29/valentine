@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Important Question</title>
+  <title>Serious Question</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -9,45 +9,59 @@
       text-align: center;
       padding: 40px;
     }
+
     img {
-      width: 200px;
+      width: 220px;
       border-radius: 15px;
       margin: 10px;
     }
+
     button {
       font-size: 18px;
       padding: 12px 20px;
-      margin: 10px;
+      margin: 15px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
+      position: relative;
     }
+
     .yes {
       background: #ff4d6d;
       color: white;
+    }
+
+    .no {
+      background: #aaa;
     }
   </style>
 </head>
 <body>
 
-  <h1>Hi. Yes, this is a website.</h1>
-  <h2>Since I’m clearly extra…</h2>
-  <h2>Will you be my Valentine? 🙃❤️</h2>
+  <h1>Okay listen 🙄</h1>
+  <h2>I made a whole website.</h2>
+  <h2>So… will you be my Valentine? 💘</h2>
 
   <img src="pic1.jpg">
   <img src="pic2.jpg">
 
   <br><br>
 
-  <button class="yes" onclick="yesClicked()">Obviously Yes</button>
-  <button onclick="yesClicked()">You Gave Me No Choice</button>
+  <button class="yes" onclick="yesClicked()">Fine, Yes ❤️</button>
+  <button class="no" onmouseover="runAway(this)">No</button>
 
-  <audio id="song" src="song.mp3"></audio>
+  <audio id="song" src="song.weba"></audio>
 
   <script>
     function yesClicked() {
       document.getElementById("song").play();
-      alert("Correct answer 😌💘");
+      alert("Correct choice 😌💖");
+    }
+
+    function runAway(btn) {
+      const x = Math.random() * 300 - 150;
+      const y = Math.random() * 300 - 150;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
     }
   </script>
 
