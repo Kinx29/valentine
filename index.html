@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>One Serious Question</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Question 💚</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #eaffea;
+      font-family: Arial, sans-serif;
       text-align: center;
       overflow: hidden;
     }
@@ -19,7 +20,7 @@
     img {
       width: 220px;
       border-radius: 15px;
-      margin: 10px;
+      margin: 20px;
     }
 
     button {
@@ -31,33 +32,20 @@
       cursor: pointer;
     }
 
-    .yes {
-      background: #2ecc71;
-      color: white;
-    }
+    .yes { background: #2ecc71; color: white; }
+    .no  { background: #aaa; position: relative; }
 
-    .no {
-      background: #aaa;
-      position: relative;
-    }
-
-    /* Fullscreen image with fade-in */
     #fullscreen {
       position: fixed;
       inset: 0;
       background: url("pic2.jpg") center / cover no-repeat;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.5s ease-in;
+      transition: opacity 1.5s ease;
       z-index: 9999;
     }
 
-    #fullscreen.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    #fullscreen.show { opacity: 1; }
 
-    /* Emoji rain */
     .emoji {
       position: fixed;
       top: -40px;
@@ -78,40 +66,54 @@
 
 <body>
 
-  <div class="container" id="content">
-    <h1>Okay listen 🙄</h1>
-    <h2>I made a whole website.</h2>
-    <h2>Will you be my Valentine? 💚</h2>
+<div class="container" id="content">
+  <h2>Okay, serious question 🙄</h2>
+  <h1>Will you be my Valentine? 💚</h1>
 
-    <img src="pic1.jpg">
+  <img src="pic1.jpg">
 
-    <br>
+  <br>
 
-    <button class="yes" onclick="yesClicked()">Fine, Yes 💚</button>
-    <button class="no" onmouseover="runAway(this)">No</button>
-  </div>
+  <button class="yes" id="yesBtn">Yes 💚</button>
+  <button class="no" onmouseover="runAway(this)">No</button>
+</div>
 
-  <!-- Fullscreen image -->
-  <div id="fullscreen"></div>
+<div id="fullscreen"></div>
 
-  <!-- Audio -->
-  <audio id="song">
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
+<audio id="song" playsinline>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
-  <script>
-    function yesClicked() {
-      // play audio
-      const audio = document.getElementById("song");
-      audio.currentTime = 0;
-      audio.play();
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const audio = document.getElementById("song");
 
-      // hide content
+  yesBtn.addEventListener("click", () => {
+    audio.play().then(() => {
       document.getElementById("content").style.display = "none";
+      document.getElementById("fullscreen").classList.add("show");
+      startEmojiRain();
+    });
+  });
 
-      // fade in fullscreen image
-      const fs = document.getElementById("fullscreen");
-      fs.classList.add("show");
+  function runAway(btn) {
+    btn.style.transform =
+      `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px)`;
+  }
 
-      // emoji rain
-      startEmojiRa
+  function startEmojiRain() {
+    const emojis = ["💚","🍀","🐸","🌿","✨"];
+    setInterval(() => {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+      e.style.left = Math.random()*100 + "vw";
+      e.style.animationDuration = (2 + Math.random()*3) + "s";
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 5000);
+    }, 200);
+  }
+</script>
+
+</body>
+</html>
