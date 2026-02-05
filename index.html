@@ -41,13 +41,20 @@
       position: relative;
     }
 
-    /* Fullscreen image */
+    /* Fullscreen image with fade-in */
     #fullscreen {
-      display: none;
       position: fixed;
       inset: 0;
       background: url("pic2.jpg") center / cover no-repeat;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease-in;
       z-index: 9999;
+    }
+
+    #fullscreen.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Emoji rain */
@@ -88,42 +95,23 @@
   <div id="fullscreen"></div>
 
   <!-- Audio -->
-  <audio id="song" src="song.mp3"></audio>
+  <audio id="song">
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     function yesClicked() {
-      // play audio (works on PC & iPhone)
+      // play audio
       const audio = document.getElementById("song");
       audio.currentTime = 0;
-      audio.play().catch(() => {});
+      audio.play();
 
-      // show fullscreen image
+      // hide content
       document.getElementById("content").style.display = "none";
-      document.getElementById("fullscreen").style.display = "block";
 
-      // start emoji rain
-      startEmojiRain();
-    }
+      // fade in fullscreen image
+      const fs = document.getElementById("fullscreen");
+      fs.classList.add("show");
 
-    function runAway(btn) {
-      const x = Math.random() * 300 - 150;
-      const y = Math.random() * 300 - 150;
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-
-    function startEmojiRain() {
-      const emojis = ["💚", "🍀", "🐸", "🌿", "✨"];
-      setInterval(() => {
-        const e = document.createElement("div");
-        e.className = "emoji";
-        e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        e.style.left = Math.random() * 100 + "vw";
-        e.style.animationDuration = (2 + Math.random() * 3) + "s";
-        document.body.appendChild(e);
-        setTimeout(() => e.remove(), 5000);
-      }, 200);
-    }
-  </script>
-
-</body>
-</html>
+      // emoji rain
+      startEmojiRa
