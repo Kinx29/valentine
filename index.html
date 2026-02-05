@@ -1,33 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Very Important Question</title>
+  <title>One Serious Question</title>
 
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       background: #eaffea;
       text-align: center;
-      padding: 40px;
       overflow: hidden;
+    }
+
+    .container {
+      padding: 40px;
     }
 
     img {
       width: 220px;
       border-radius: 15px;
       margin: 10px;
-    }
-
-    /* Second image hidden + fade effect */
-    #pic2 {
-      display: none;
-      opacity: 0;
-      transition: opacity 1.5s ease-in;
-    }
-
-    #pic2.show {
-      display: block;
-      opacity: 1;
     }
 
     button {
@@ -37,7 +29,6 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      position: relative;
     }
 
     .yes {
@@ -47,6 +38,16 @@
 
     .no {
       background: #aaa;
+      position: relative;
+    }
+
+    /* Fullscreen image */
+    #fullscreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: url("pic2.jpg") center / cover no-repeat;
+      z-index: 9999;
     }
 
     /* Emoji rain */
@@ -56,6 +57,7 @@
       font-size: 28px;
       animation: fall linear forwards;
       pointer-events: none;
+      z-index: 10000;
     }
 
     @keyframes fall {
@@ -69,38 +71,38 @@
 
 <body>
 
-  <h1>Okay listen 🙄</h1>
-  <h2>I made a whole website.</h2>
-  <h2>So yeah… will you be my Valentine? 💚</h2>
+  <div class="container" id="content">
+    <h1>Okay listen 🙄</h1>
+    <h2>I made a whole website.</h2>
+    <h2>Will you be my Valentine? 💚</h2>
 
-  <!-- First image -->
-  <img id="pic1" src="pic1.jpg">
+    <img src="pic1.jpg">
 
-  <!-- Second image (appears after YES) -->
-  <img id="pic2" src="pic2.jpg">
+    <br>
 
-  <br><br>
+    <button class="yes" onclick="yesClicked()">Fine, Yes 💚</button>
+    <button class="no" onmouseover="runAway(this)">No</button>
+  </div>
 
-  <button class="yes" onclick="yesClicked()">Fine, Yes 💚</button>
-  <button class="no" onmouseover="runAway(this)">No</button>
+  <!-- Fullscreen image -->
+  <div id="fullscreen"></div>
 
-  <audio id="song" src="song.mp3" preload="auto"></audio>
+  <!-- Audio -->
+  <audio id="song" src="song.mp3"></audio>
 
   <script>
     function yesClicked() {
-      // play music (iPhone safe)
+      // play audio (works on PC & iPhone)
       const audio = document.getElementById("song");
       audio.currentTime = 0;
       audio.play().catch(() => {});
 
-      // fade in second picture
-      const pic2 = document.getElementById("pic2");
-      pic2.classList.add("show");
+      // show fullscreen image
+      document.getElementById("content").style.display = "none";
+      document.getElementById("fullscreen").style.display = "block";
 
       // start emoji rain
       startEmojiRain();
-
-      alert("Correct answer 😌💚");
     }
 
     function runAway(btn) {
@@ -112,18 +114,16 @@
     function startEmojiRain() {
       const emojis = ["💚", "🍀", "🐸", "🌿", "✨"];
       setInterval(() => {
-        const emoji = document.createElement("div");
-        emoji.className = "emoji";
-        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = Math.random() * 100 + "vw";
-        emoji.style.animationDuration = (2 + Math.random() * 3) + "s";
-        document.body.appendChild(emoji);
-
-        setTimeout(() => emoji.remove(), 5000);
+        const e = document.createElement("div");
+        e.className = "emoji";
+        e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(e);
+        setTimeout(() => e.remove(), 5000);
       }, 200);
     }
   </script>
 
 </body>
 </html>
-
